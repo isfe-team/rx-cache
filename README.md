@@ -1,6 +1,6 @@
 # rx-cache
 
-*IMPORTANT* IN DEVELOPING NOW. DON'T USE.
+**IMPORTANT** IN DEVELOPING NOW. DON'T USE.
 
 A cache module for async task based on rx.
 
