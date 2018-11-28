@@ -41,3 +41,9 @@ Rx is lodash for async/stream.
 We can use ReplaySubject/catchError/retry or even scan(to make a store) to do these things.
 
 TODO
+
+## reactive
+
+The code in `reactive` directory is previous trial in dev. Will improve later :D.
+
+
