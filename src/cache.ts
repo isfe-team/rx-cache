@@ -6,7 +6,7 @@
 import { Subject, ReplaySubject, Observable, of, Subscription } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
-type ObservableGenerator<T> = () => Observable<T>;
+type ObservableGenerator<T> = (...args: any[]) => Observable<T>;
 
 export type CacheConfig<T> = {
   interceptors?: Array<Function>;
@@ -36,7 +36,7 @@ export class AsyncCache<T> {
   currentCacheSubscription: Subscription | null = null;
   operateSubscription: Subscription;
   cache$$: Subject<any>;
-  operate$$ = new Subject<string>();
+  operate$$ = new Subject<OperateType>();
   observableGenerator: ObservableGenerator<T>;
 
   constructor(config: CacheConfig<T>) {
@@ -59,18 +59,18 @@ export class AsyncCache<T> {
     return new AsyncCache<R>(config);
   }
 
-  handleOperate(type: OperateType): void {
+  handleOperate(type: OperateType, ...args: any[]): void {
     if (type === OperateType.FORCE_UPDATE) {
-      this.cacheBoot();
+      this.cacheBoot.apply(this, args);
     }
   }
 
-  cacheBoot(): void {
+  cacheBoot(...args: any[]): void {
     if (this.currentCacheSubscription) {
       // judge whether closed inner
       this.currentCacheSubscription.unsubscribe();
     }
-    this.currentCacheSubscription = this.observableGenerator().pipe(
+    this.currentCacheSubscription = this.observableGenerator.apply(this, args).pipe(
       retry(this.retryCount)
     ).subscribe(this.cache$$);
   }

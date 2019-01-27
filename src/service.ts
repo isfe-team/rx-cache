@@ -36,7 +36,8 @@ const userRes: IUserResponse = {
 
 const getUsersApi = (() => {
   let cnt = 0;
-  return () => {
+  return (...args: any[]) => {
+    console.log('args', args);
     cnt += 1;
     if (cnt % 3 === 0) {
       return Promise.resolve(userRes);
@@ -46,11 +47,11 @@ const getUsersApi = (() => {
 })();
 
 export const user = {
-  getUserCache() {
+  getUserCache(...args: any[]) {
     return new AsyncCache({
       retryCount: 2,
       replayCount: 2,
-      observableGenerator: () => from(getUsersApi())
+      observableGenerator: () => from(getUsersApi.apply(null, args))
     });
   }
 }

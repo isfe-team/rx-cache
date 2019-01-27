@@ -45,5 +45,3 @@ TODO
 ## reactive
 
 The code in `reactive` directory is previous trial in dev. Will improve later :D.
-
-

@@ -1,7 +1,7 @@
 {
-  "name": "svd",
-  "version": "1.0.0",
-  "description": "",
+  "name": "rx-cache",
+  "version": "0.0.1",
+  "description": "cache based on rx",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server",
